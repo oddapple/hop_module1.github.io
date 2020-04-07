@@ -9,7 +9,7 @@
     .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
     
-    ToBuyController.$inject = ['ShoppingListCheckOffService', '$scope'];
+    ToBuyController.$inject = ['ShoppingListCheckOffService'];
     function ToBuyController (ShoppingListCheckOffService){ 
         var buy = this; 
         buy.items = ShoppingListCheckOffService.getItems();
@@ -19,7 +19,7 @@
           };
     };
 
-    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService', '$scope'];
+    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
     function AlreadyBoughtController (ShoppingListCheckOffService){
         var bought = this;
         bought.items = ShoppingListCheckOffService.getItems2();
@@ -49,7 +49,7 @@
             foodIsBought.push(foodToBuy[itemIndex]);
             foodToBuy.splice(itemIndex, 1);
             
-        }
+        };
 
         service.getItems = function () {
             return foodToBuy;
@@ -60,7 +60,10 @@
         };
         
           
+
     };
 
+    
+    
 
 })();
