@@ -22,7 +22,7 @@
     AlreadyBoughtController.$inject = ['ShoppingListCheckOffService', '$scope'];
     function AlreadyBoughtController (ShoppingListCheckOffService){
         var bought = this;
-        bought.items = ShoppingListCheckOffService.removeItem();
+        bought.items = ShoppingListCheckOffService.getItems2();
     
 };
 
@@ -48,15 +48,18 @@
         service.removeItem = function(itemIndex){
             foodIsBought.push(foodToBuy[itemIndex]);
             foodToBuy.splice(itemIndex, 1);
-        
-        return foodIsBought;
+            
         }
 
         service.getItems = function () {
             return foodToBuy;
-          };
+        };
+
+        service.getItems2 = function () {
+            return foodIsBought;
+        };
         
-        
+          
 
     };
 
