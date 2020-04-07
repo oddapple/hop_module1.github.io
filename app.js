@@ -2,24 +2,65 @@
 
 (function(){
     'use strict';
-    angular.module('LunchCheck', [])
-    .controller('LunchCheckController', [ '$scope', LunchCheckController]);
 
-    function LunchCheckController($scope){
-        $scope.fruitModel = "";
+    angular.module('ShoppingListCheckOff', [])
+    .controller('ToBuyController', ToBuyController)
+    .controller('AlreadyBoughtController', AlreadyBoughtController)
+    .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
-        $scope.fruitButton = function (fruitOutput){
-            const str = fruitOutput;
-            const words = str.split(',');
-            if (!words[0]) {
-                $scope.fruitOutput = "Empty";
-            } else if (words[0] && !words[3]) {
-                $scope.fruitOutput = "Enjoy!";
-            } else if (words[3]) {
-                $scope.fruitOutput = "Too much!";
-            }
+    
+    ToBuyController.$inject = ['ShoppingListCheckOffService', '$scope'];
+    function ToBuyController (ShoppingListCheckOffService){ 
+        var buy = this; 
+        buy.items = ShoppingListCheckOffService.getItems();
+        
+        buy.button = function (itemIndex) {
+            ShoppingListCheckOffService.removeItem(itemIndex);
+          };
+    };
+
+    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService', '$scope'];
+    function AlreadyBoughtController (ShoppingListCheckOffService){
+        var bought = this;
+        bought.items = ShoppingListCheckOffService.removeItem();
+    
+};
+
+    function ShoppingListCheckOffService() {
+
+        var service = this;
+
+        var foodToBuy =  [
+            {   name: "Milk",
+                quantity: "1" },
+            {   name: "Avocado",
+                quantity: "1" },
+            {   name: "Cans of Beans",
+                quantity: "2" },
+            {   name: "Apples",
+                quantity: "8" },
+            {   name: "Yogurts",
+                quantity: "2" }
+        ];
+        
+        var foodIsBought = [];
+
+        service.removeItem = function(itemIndex){
+            foodIsBought.push(foodToBuy[itemIndex]);
+            foodToBuy.splice(itemIndex, 1);
+        
+        return foodIsBought;
         }
-    }
+
+        service.getItems = function () {
+            return foodToBuy;
+          };
+        
+        
+
+    };
+
+    
     
 
 })();
